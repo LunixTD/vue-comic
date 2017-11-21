@@ -12,17 +12,16 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 
-  .slide-enter-active
-    will-change: 'transform'
-    transition: transform .5s ease
-  .slide-leave-active
-    will-change: 'transform'
-    transition: transform .25s linear
-  .slide-enter, .slide-leave-to
-    transform: translateX(100%)
-
   .record
-    background-color: lightgrey
+    background-color: lightcoral
     height: calc(100vh - 46px)
     z-index: 9
+    &.slide-enter-active
+      will-change: 'transform'
+      transition: transform .5s ease
+    &.slide-leave-active
+      will-change: 'transform'
+      transition: transform .25s linear
+    &.slide-enter, &.slide-leave-active
+      transform: translate3d(100%,0,0)
 </style>

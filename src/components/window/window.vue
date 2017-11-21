@@ -2,7 +2,9 @@
   <div class="window" ref="window" :class="zoom">
     <div class="mask" v-show="windowZoom"  @click="recover"></div>
     <My-Header></My-Header>
-    <router-view class="router"></router-view>
+    <div class="container">
+      <router-view class="router"></router-view>
+    </div>
   </div>
 </template>
 
@@ -113,10 +115,15 @@
       top: 0
       left: 0
       z-index: 10
-    .router
+    .container
       position: absolute
       width: 100%
       height: calc(100vh - 46px)
       top: 46px
       overflow: hidden
+    .router
+      position: absolute
+      width: 100%
+      height: 100%
+      top: 0
 </style>

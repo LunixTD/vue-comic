@@ -20,8 +20,8 @@
         </div>
       </div>
       <div class="nav-list">
-        <ul ref="nav">
-          <li data-router="home">
+        <ul ref="nav" @click="restitution">
+          <!-- <li data-router="home">
             <img src="./home.svg">
             <span class="text">首页</span>
           </li>
@@ -36,7 +36,23 @@
           <li data-router="search">
             <img src="./search.svg">
             <span class="text">搜索</span>
-          </li>
+          </li> -->
+          <router-link to="home" tag="li">
+            <img src="./home.svg">
+            <span class="text">首页</span>
+          </router-link>
+          <router-link to="myFaovr" tag="li">
+            <img src="./favor.svg">
+            <span class="text">我的收藏</span>
+          </router-link>
+          <router-link to="record" tag="li">
+            <img src="./history.svg">
+            <span class="text">最近阅读</span>
+          </router-link>
+          <router-link to="search" tag="li">
+            <img src="./search.svg">
+            <span class="text">搜索</span>
+          </router-link>
         </ul>
       </div>
     </div>
@@ -45,7 +61,7 @@
 
 <script type="text/ecmascript-6">
   import {addClass, toggleClass} from 'common/js/dom'
-  import {touchEffect} from 'common/js/touchEffect'
+  // import {touchEffect} from 'common/js/touchEffect'
   import {mapGetters, mapMutations} from 'vuex'
 
   export default {
@@ -55,9 +71,9 @@
       }
     },
     mounted() {
-      touchEffect(this.$refs.nav, () => {
-        this.setWindowZoom(false)
-      })
+      // touchEffect(this.$refs.nav, () => {
+      //   this.setWindowZoom(false)
+      // })
     },
     computed: {
       ...mapGetters([
@@ -71,6 +87,14 @@
         setTimeout(function() {
           toggleClass(target, 'touchStart', 'touchEnd')
         }, 100)
+      },
+      restitution(e) {
+        let target = e.target
+        if (target.nodeName.toLowerCase() === 'li') {
+          this.setWindowZoom(false)
+        }
+        console.dir(target)
+        // this.setWindowZoom(false)
       },
       addWC() {
         this.$refs.tabContainer.style.willChange = 'transform, opacity'
