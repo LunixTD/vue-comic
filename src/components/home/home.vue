@@ -1,10 +1,10 @@
 <template>
   <transition name="back">
     <div class="home">
-      <div class="slider-wrapper">
-        <slider>
+      <div v-if="recommendList.length" class="slider-wrapper">
+        <slider ref="slider">
           <div v-for="item in recommendList" class="slider-item">
-            <a><img :src="item.imgSrc" alt=""></a>
+            <a><img :src="item.imgSrc" @load="loadImg" alt=""></a>
           </div>
         </slider>
       </div>
@@ -26,12 +26,23 @@
             imgSrc: './static/banner/2.jpg'
           },
           {
-            imgSrc: './static/banner/3.png'
+            imgSrc: './static/banner/3.jpg'
           },
           {
-            imgSrc: './static/banner/4.png'
+            imgSrc: './static/banner/4.jpg'
+          },
+          {
+            imgSrc: './static/banner/5.jpg'
           }
         ]
+      }
+    },
+    methods: {
+      loadImg() {
+        if (!this.imgLoaded) {
+          this.$refs.slider.refresh()
+          this.imgLoaded = true
+        }
       }
     },
     components: {
@@ -48,7 +59,7 @@
     z-index: 1
     &.back-enter-active
       will-change: 'transform'
-      transition: transform .2s linear
+      transition: transform .3s ease
     &.back-leave-active
       will-change: 'transform'
       transition: transform .5s ease

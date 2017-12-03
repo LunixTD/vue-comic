@@ -1,6 +1,7 @@
 <template>
   <div class="tab-container" ref="tabContainer" :class="zoom">
     <div class="tab">
+      <div class="mask" v-show="maskState"></div>
       <div class="user-block">
         <div class="face">
           <img src="./avatar.jpg" alt="">
@@ -20,36 +21,20 @@
         </div>
       </div>
       <div class="nav-list">
-        <ul ref="nav" @click="restitution">
-          <!-- <li data-router="home">
-            <img src="./home.svg">
-            <span class="text">首页</span>
-          </li>
-          <li data-router="myFavor">
-            <img src="./favor.svg">
-            <span class="text">我的收藏</span>
-          </li>
-          <li data-router="record">
-            <img src="./history.svg">
-            <span class="text">最近阅读</span>
-          </li>
-          <li data-router="search">
-            <img src="./search.svg">
-            <span class="text">搜索</span>
-          </li> -->
-          <router-link to="home" tag="li">
+        <ul ref="nav">
+          <router-link to="home" tag="li" data-to="home">
             <img src="./home.svg">
             <span class="text">首页</span>
           </router-link>
-          <router-link to="myFaovr" tag="li">
+          <router-link to="myFavor" tag="li" data-to="myFavor">
             <img src="./favor.svg">
             <span class="text">我的收藏</span>
           </router-link>
-          <router-link to="record" tag="li">
+          <router-link to="record" tag="li" data-to="record">
             <img src="./history.svg">
             <span class="text">最近阅读</span>
           </router-link>
-          <router-link to="search" tag="li">
+          <router-link to="search" tag="li" data-to="search">
             <img src="./search.svg">
             <span class="text">搜索</span>
           </router-link>
@@ -60,17 +45,48 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {addClass, toggleClass} from 'common/js/dom'
+  import {addClass, toggleClass, getData} from 'common/js/dom'
   // import {touchEffect} from 'common/js/touchEffect'
   import {mapGetters, mapMutations} from 'vuex'
+  import {pageInfo} from 'common/js/config'
 
   export default {
     data() {
       return {
-        zoom: ''
+        zoom: '',
+        maskState: true
       }
     },
     mounted() {
+      // 绑定tab菜单的点击事件，已经与标题内容的关联
+      let children = this.$refs.nav.children
+      for (let i = children.length - 1; i >= 0; i--) {
+        let item = children[i]
+        item.addEventListener('click', () => {
+          this.setWindowZoom(false)
+          let pageName = getData(item, 'to')
+          switch (pageName) {
+            case 'home':
+              this.setWindowInfo(pageInfo.home)
+              break
+            case 'myFavor':
+              this.setWindowInfo(pageInfo.myFavor)
+              break
+            case 'record':
+              this.setWindowInfo(pageInfo.record)
+              break
+            case 'search':
+              this.setWindowInfo(pageInfo.search)
+              break
+            case 'config':
+              this.setWindowInfo(pageInfo.search)
+              break
+            default :
+              console.log('Nav error! (Error from tab.vue)')
+              break
+          }
+        })
+      }
       // touchEffect(this.$refs.nav, () => {
       //   this.setWindowZoom(false)
       // })
@@ -88,33 +104,30 @@
           toggleClass(target, 'touchStart', 'touchEnd')
         }, 100)
       },
-      restitution(e) {
-        let target = e.target
-        if (target.nodeName.toLowerCase() === 'li') {
-          this.setWindowZoom(false)
-        }
-        console.dir(target)
-        // this.setWindowZoom(false)
-      },
-      addWC() {
+      addWc() {
         this.$refs.tabContainer.style.willChange = 'transform, opacity'
       },
-      removeWC() {
+      removeWc() {
         setTimeout(() => {
           this.$refs.tabContainer.style.willChange = 'auto'
         }, 500)
       },
       ...mapMutations({
-        setWindowZoom: 'SET_WINDOW_ZOOM'
+        setWindowZoom: 'SET_WINDOW_ZOOM',
+        setWindowInfo: 'SET_WINDOW_INFO'
       })
     },
     watch: {
       windowZoom(newVal) {
+        this.maskState = true
+        setTimeout(() => {
+          this.maskState = false
+        }, 500)
         if (newVal) {
-          this.addWC()
+          this.addWc()
           this.zoom = 'zoom'
         } else {
-          this.removeWC()
+          this.removeWc()
           this.zoom = ''
         }
       }
@@ -149,6 +162,8 @@
       height: 80%
       vetically()
       padding: 15px 0 15px 15px
+      .mask
+        mask(10)
       .user-block
         display: flex
         flex-direction: row

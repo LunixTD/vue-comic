@@ -1,2 +1,2 @@
 export const windowZoom = state => state.windowZoom
-export const windowContent = state => state.windowContent
+export const windowInfo = state => state.windowInfo

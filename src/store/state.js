@@ -1,7 +1,10 @@
 const state = {
   window: {},
   windowZoom: false,
-  windowContent: 'home'
+  windowInfo: {
+    title: 'home',
+    avatarBtn: true
+  }
 }
 
 export default state

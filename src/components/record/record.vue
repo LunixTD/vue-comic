@@ -21,7 +21,7 @@
       transition: transform .5s ease
     &.slide-leave-active
       will-change: 'transform'
-      transition: transform .25s linear
+      transition: transform .4s ease
     &.slide-enter, &.slide-leave-active
       transform: translate3d(100%,0,0)
 </style>
