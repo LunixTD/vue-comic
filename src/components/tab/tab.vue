@@ -146,7 +146,7 @@
     height: 100vh
     top: 0
     left: 0
-    background-image: url(6.png)
+    background-image: url(/static/other/6.png)
     transform-origin: center
     color: #fff
     z-index: 1

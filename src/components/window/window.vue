@@ -13,16 +13,18 @@
 <script type="text/ecmascript-6">
   import MyHeader from 'components/header/header'
   import {mapGetters, mapMutations} from 'vuex'
+  // import {getCategory} from 'api/category'
+  // import {ERR_OK} from 'api/config'
 
   export default {
     data() {
       return {
         zoom: '',
-        distance: 0,
-        posX: 0,
-        scale: 0,
-        translateX: 0
+        category: {}
       }
+    },
+    created() {
+      this._getCategory()
     },
     computed: {
       ...mapGetters([
@@ -40,6 +42,15 @@
         setTimeout(() => {
           this.$refs.window.style.willChange = 'auto'
         }, 500)
+      },
+      _getCategory() {
+        // getCategory(1)
+        // .then((res) => {
+        //   if (res.errNo === ERR_OK) {
+        //     this.category = res.data
+        //     console.log(res.data)
+        //   }
+        // })
       },
       ...mapMutations({
         setWindowZoom: 'SET_WINDOW_ZOOM'
@@ -72,7 +83,7 @@
     height: 100vh
     top: 0
     left: 0
-    background-color: $color-background
+    background-image: url(/static/other/6.png)
     color: $color-text
     box-shadow: -6px 7px 13px 4px #333
     transform-origin: left center
