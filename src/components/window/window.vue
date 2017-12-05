@@ -85,7 +85,7 @@
     left: 0
     background-image: url(/static/other/6.png)
     color: $color-text
-    box-shadow: -6px 7px 13px 4px #333
+    box-shadow: -6px 7px 13px 4px #24292e
     transform-origin: left center
     z-index: 10
     transition: transform .5s ease

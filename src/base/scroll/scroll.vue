@@ -9,9 +9,11 @@
 
   export default {
     mounted() {
-      setTimeout(() => {
-        this._initScroll()
-      }, 20)
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this._initScroll()
+        }, 20)
+      })
     },
     methods: {
       _initScroll() {
@@ -19,8 +21,9 @@
           return
         }
         this.scroll = new BScroll(this.$refs.wrapper, {
+          scrollY: true,
           probeType: 1,
-          click: true
+          HWCompositing: true
         })
       },
       refresh() {
